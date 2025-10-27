@@ -87,6 +87,14 @@ const contactSchema = new mongoose.Schema({
 // Indexes for performance
 contactSchema.index({ email: 1 });
 contactSchema.index({ company: 1 });
+contactSchema.index({ status: 1 });
+contactSchema.index({ assignedTo: 1 });
 contactSchema.index({ createdAt: -1 });
+contactSchema.index({ lastName: 1, firstName: 1 });
+
+// Virtual for full name
+contactSchema.virtual('fullName').get(function() {
+  return `${this.firstName} ${this.lastName}`;
+});
 
 module.exports = mongoose.model('Contact', contactSchema);
