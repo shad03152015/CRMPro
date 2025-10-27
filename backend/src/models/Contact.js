@@ -31,13 +31,54 @@ const contactSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  address: {
+    street: String,
+    city: String,
+    state: String,
+    zipCode: String,
+    country: String
+  },
+  website: {
+    type: String,
+    trim: true
+  },
+  socialMedia: {
+    linkedin: String,
+    twitter: String,
+    facebook: String
+  },
+  leadSource: {
+    type: String,
+    enum: ['Website', 'Referral', 'Social Media', 'Email Campaign', 'Cold Call', 'Event', 'Other'],
+    default: 'Other'
+  },
+  status: {
+    type: String,
+    enum: ['Active', 'Inactive', 'Lead', 'Customer', 'Partner'],
+    default: 'Lead'
+  },
+  assignedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   tags: [{
     type: String,
     trim: true
   }],
+  notes: {
+    type: String,
+    trim: true
+  },
+  lastContactedDate: {
+    type: Date
+  },
   customFields: {
     type: mongoose.Schema.Types.Mixed,
     default: {}
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   }
 }, {
   timestamps: true
@@ -46,6 +87,14 @@ const contactSchema = new mongoose.Schema({
 // Indexes for performance
 contactSchema.index({ email: 1 });
 contactSchema.index({ company: 1 });
+contactSchema.index({ status: 1 });
+contactSchema.index({ assignedTo: 1 });
 contactSchema.index({ createdAt: -1 });
+contactSchema.index({ lastName: 1, firstName: 1 });
+
+// Virtual for full name
+contactSchema.virtual('fullName').get(function() {
+  return `${this.firstName} ${this.lastName}`;
+});
 
 module.exports = mongoose.model('Contact', contactSchema);
