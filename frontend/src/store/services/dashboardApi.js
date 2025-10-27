@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 export const dashboardApi = createApi({
   reducerPath: 'dashboardApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ['DashboardMetrics', 'Opportunities', 'Pipelines', 'Stages', 'Calendars', 'Appointments'],
+  tagTypes: ['DashboardMetrics', 'Opportunities', 'Pipelines', 'Stages', 'Calendars', 'Appointments', 'Contacts'],
   endpoints: (builder) => ({
     // Get dashboard metrics
     getDashboardMetrics: builder.query({
