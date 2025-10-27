@@ -404,6 +404,300 @@ const seedDatabase = async () => {
       }
     ]);
 
+    // Create conversations
+    console.log('Creating sample conversations...');
+    const conversations = [];
+
+    // Active conversation with Acme Corp
+    const conversation1 = await Conversation.create({
+      contactId: contacts[0]._id,
+      subject: 'Enterprise Package Implementation Questions',
+      status: 'open',
+      channel: 'email',
+      lastMessageAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+      lastMessagePreview: 'Thank you for the quick response. I have a few more questions about the implementation timeline...',
+      unreadCount: 2,
+      isStarred: true,
+      tags: ['important', 'implementation']
+    });
+    conversations.push(conversation1);
+
+    // Messages for conversation1
+    await Message.insertMany([
+      {
+        conversationId: conversation1._id,
+        sender: {
+          type: 'contact',
+          name: 'John Doe',
+          email: 'john.doe@acmecorp.com'
+        },
+        content: 'Hi, we received your proposal for the Enterprise Package. Could you provide more details about the implementation timeline?',
+        direction: 'inbound',
+        status: 'read',
+        channel: 'email',
+        sentAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+        readAt: new Date(Date.now() - 23 * 60 * 60 * 1000)
+      },
+      {
+        conversationId: conversation1._id,
+        sender: {
+          type: 'user',
+          name: 'Sales Team',
+          email: 'sales@crmpro.com'
+        },
+        content: 'Hello John, thank you for your interest! The typical implementation timeline is 6-8 weeks, which includes setup, data migration, training, and testing phases. We can discuss a customized timeline based on your specific needs.',
+        direction: 'outbound',
+        status: 'read',
+        channel: 'email',
+        sentAt: new Date(Date.now() - 20 * 60 * 60 * 1000), // 20 hours ago
+        readAt: new Date(Date.now() - 18 * 60 * 60 * 1000)
+      },
+      {
+        conversationId: conversation1._id,
+        sender: {
+          type: 'contact',
+          name: 'John Doe',
+          email: 'john.doe@acmecorp.com'
+        },
+        content: 'Thank you for the quick response. I have a few more questions about the implementation timeline and resource requirements. Can we schedule a call this week?',
+        direction: 'inbound',
+        status: 'sent',
+        channel: 'email',
+        sentAt: new Date(Date.now() - 2 * 60 * 60 * 1000) // 2 hours ago
+      }
+    ]);
+
+    // Conversation with TechStart
+    const conversation2 = await Conversation.create({
+      contactId: contacts[1]._id,
+      subject: 'Cloud Migration Proposal - Follow-up',
+      status: 'open',
+      channel: 'email',
+      lastMessageAt: new Date(Date.now() - 5 * 60 * 60 * 1000), // 5 hours ago
+      lastMessagePreview: 'We reviewed your proposal and are very impressed. Our team would like to move forward with Phase 1...',
+      unreadCount: 1,
+      isStarred: true,
+      tags: ['hot-lead']
+    });
+    conversations.push(conversation2);
+
+    await Message.insertMany([
+      {
+        conversationId: conversation2._id,
+        sender: {
+          type: 'user',
+          name: 'Sales Team',
+          email: 'sales@crmpro.com'
+        },
+        content: 'Hi Jane, following up on our call last week. Attached is the detailed proposal for your cloud migration project. Please let me know if you have any questions.',
+        direction: 'outbound',
+        status: 'read',
+        channel: 'email',
+        sentAt: new Date(Date.now() - 48 * 60 * 60 * 1000), // 2 days ago
+        readAt: new Date(Date.now() - 46 * 60 * 60 * 1000),
+        attachments: [
+          {
+            filename: 'Cloud_Migration_Proposal.pdf',
+            url: 'https://example.com/proposals/cloud-migration.pdf',
+            size: 2456789,
+            mimeType: 'application/pdf'
+          }
+        ]
+      },
+      {
+        conversationId: conversation2._id,
+        sender: {
+          type: 'contact',
+          name: 'Jane Smith',
+          email: 'jane.smith@techstart.com'
+        },
+        content: 'We reviewed your proposal and are very impressed. Our team would like to move forward with Phase 1. Can we schedule a kickoff meeting?',
+        direction: 'inbound',
+        status: 'sent',
+        channel: 'email',
+        sentAt: new Date(Date.now() - 5 * 60 * 60 * 1000) // 5 hours ago
+      }
+    ]);
+
+    // Chat conversation with Digital World
+    const conversation3 = await Conversation.create({
+      contactId: contacts[3]._id,
+      subject: 'Marketing Automation Platform Questions',
+      status: 'open',
+      channel: 'chat',
+      lastMessageAt: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
+      lastMessagePreview: 'Perfect! I\'ll bring those questions to our team meeting tomorrow.',
+      unreadCount: 0,
+      isStarred: false,
+      tags: ['chat', 'inquiry']
+    });
+    conversations.push(conversation3);
+
+    await Message.insertMany([
+      {
+        conversationId: conversation3._id,
+        sender: {
+          type: 'contact',
+          name: 'Emily Brown',
+          email: 'emily.b@digitalworld.com'
+        },
+        content: 'Hi! I have some questions about your marketing automation platform.',
+        direction: 'inbound',
+        status: 'read',
+        channel: 'chat',
+        sentAt: new Date(Date.now() - 60 * 60 * 1000), // 1 hour ago
+        readAt: new Date(Date.now() - 59 * 60 * 1000)
+      },
+      {
+        conversationId: conversation3._id,
+        sender: {
+          type: 'user',
+          name: 'Support Team',
+          email: 'support@crmpro.com'
+        },
+        content: 'Hello Emily! I\'d be happy to help. What would you like to know?',
+        direction: 'outbound',
+        status: 'read',
+        channel: 'chat',
+        sentAt: new Date(Date.now() - 58 * 60 * 1000),
+        readAt: new Date(Date.now() - 55 * 60 * 1000)
+      },
+      {
+        conversationId: conversation3._id,
+        sender: {
+          type: 'contact',
+          name: 'Emily Brown',
+          email: 'emily.b@digitalworld.com'
+        },
+        content: 'We\'re looking for a solution that can handle email campaigns, social media scheduling, and lead scoring. Does your platform support all of these?',
+        direction: 'inbound',
+        status: 'read',
+        channel: 'chat',
+        sentAt: new Date(Date.now() - 50 * 60 * 1000),
+        readAt: new Date(Date.now() - 48 * 60 * 1000)
+      },
+      {
+        conversationId: conversation3._id,
+        sender: {
+          type: 'user',
+          name: 'Support Team',
+          email: 'support@crmpro.com'
+        },
+        content: 'Yes, absolutely! Our platform includes all those features and more. I can send you some documentation and case studies that show how other companies are using these features.',
+        direction: 'outbound',
+        status: 'read',
+        channel: 'chat',
+        sentAt: new Date(Date.now() - 45 * 60 * 1000),
+        readAt: new Date(Date.now() - 40 * 60 * 1000)
+      },
+      {
+        conversationId: conversation3._id,
+        sender: {
+          type: 'contact',
+          name: 'Emily Brown',
+          email: 'emily.b@digitalworld.com'
+        },
+        content: 'Perfect! I\'ll bring those questions to our team meeting tomorrow.',
+        direction: 'inbound',
+        status: 'read',
+        channel: 'chat',
+        sentAt: new Date(Date.now() - 30 * 60 * 1000),
+        readAt: new Date(Date.now() - 25 * 60 * 1000)
+      }
+    ]);
+
+    // Closed conversation with Innovate Solutions
+    const conversation4 = await Conversation.create({
+      contactId: contacts[2]._id,
+      subject: 'Consulting Services Contract - Signed',
+      status: 'closed',
+      channel: 'email',
+      lastMessageAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
+      lastMessagePreview: 'Great! Looking forward to working with you. The contract has been signed and returned.',
+      unreadCount: 0,
+      isStarred: false,
+      tags: ['closed', 'contract']
+    });
+    conversations.push(conversation4);
+
+    await Message.insertMany([
+      {
+        conversationId: conversation4._id,
+        sender: {
+          type: 'user',
+          name: 'Sales Team',
+          email: 'sales@crmpro.com'
+        },
+        content: 'Hi Michael, the final contract for the 6-month consulting engagement is ready. Please review and sign at your earliest convenience.',
+        direction: 'outbound',
+        status: 'read',
+        channel: 'email',
+        sentAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        readAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000)
+      },
+      {
+        conversationId: conversation4._id,
+        sender: {
+          type: 'contact',
+          name: 'Michael Johnson',
+          email: 'm.johnson@innovate.com'
+        },
+        content: 'Great! Looking forward to working with you. The contract has been signed and returned.',
+        direction: 'inbound',
+        status: 'read',
+        channel: 'email',
+        sentAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+        readAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
+      }
+    ]);
+
+    // Phone conversation with Global Tech
+    const conversation5 = await Conversation.create({
+      contactId: contacts[4]._id,
+      subject: 'Security Audit Discussion',
+      status: 'pending',
+      channel: 'phone',
+      lastMessageAt: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6 hours ago
+      lastMessagePreview: 'Call completed - waiting for David to review our proposal and get back to us by Friday.',
+      unreadCount: 0,
+      isStarred: false,
+      tags: ['follow-up']
+    });
+    conversations.push(conversation5);
+
+    await Message.insertMany([
+      {
+        conversationId: conversation5._id,
+        sender: {
+          type: 'system',
+          name: 'CRM System'
+        },
+        content: 'Phone call scheduled with David Wilson regarding Security Audit project.',
+        direction: 'inbound',
+        status: 'read',
+        channel: 'phone',
+        sentAt: new Date(Date.now() - 12 * 60 * 60 * 1000)
+      },
+      {
+        conversationId: conversation5._id,
+        sender: {
+          type: 'system',
+          name: 'CRM System'
+        },
+        content: 'Call completed - waiting for David to review our proposal and get back to us by Friday.',
+        direction: 'outbound',
+        status: 'read',
+        channel: 'phone',
+        sentAt: new Date(Date.now() - 6 * 60 * 60 * 1000),
+        metadata: {
+          duration: 1800, // 30 minutes
+          recordingUrl: 'https://example.com/recordings/call-123.mp3'
+        }
+      }
+    ]);
+
+    const totalMessages = await Message.countDocuments({});
+
     console.log('\n✅ Database seeding completed successfully!');
     console.log(`\n📊 Seeded Data Summary:`);
     console.log(`   - Pipelines: 1`);
