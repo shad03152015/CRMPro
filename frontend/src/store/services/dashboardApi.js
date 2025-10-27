@@ -260,6 +260,113 @@ export const dashboardApi = createApi({
     getContactStats: builder.query({
       query: () => '/contacts/stats',
       providesTags: ['Contacts']
+    }),
+
+    // Get conversations
+    getConversations: builder.query({
+      query: (filters = {}) => {
+        const params = new URLSearchParams();
+        Object.keys(filters).forEach(key => {
+          if (filters[key] !== undefined && filters[key] !== null && filters[key] !== '') {
+            params.append(key, filters[key]);
+          }
+        });
+        return `/conversations?${params.toString()}`;
+      },
+      providesTags: ['Conversations'],
+      keepUnusedDataFor: 30
+    }),
+
+    // Get single conversation
+    getConversation: builder.query({
+      query: (id) => `/conversations/${id}`,
+      providesTags: ['Conversations']
+    }),
+
+    // Create conversation
+    createConversation: builder.mutation({
+      query: (data) => ({
+        url: '/conversations',
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: ['Conversations']
+    }),
+
+    // Update conversation
+    updateConversation: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/conversations/${id}`,
+        method: 'PUT',
+        body: data
+      }),
+      invalidatesTags: ['Conversations']
+    }),
+
+    // Delete conversation
+    deleteConversation: builder.mutation({
+      query: (id) => ({
+        url: `/conversations/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Conversations']
+    }),
+
+    // Toggle star
+    toggleConversationStar: builder.mutation({
+      query: (id) => ({
+        url: `/conversations/${id}/star`,
+        method: 'PATCH'
+      }),
+      invalidatesTags: ['Conversations']
+    }),
+
+    // Mark as read
+    markConversationAsRead: builder.mutation({
+      query: (id) => ({
+        url: `/conversations/${id}/read`,
+        method: 'PATCH'
+      }),
+      invalidatesTags: ['Conversations']
+    }),
+
+    // Mark as unread
+    markConversationAsUnread: builder.mutation({
+      query: (id) => ({
+        url: `/conversations/${id}/unread`,
+        method: 'PATCH'
+      }),
+      invalidatesTags: ['Conversations']
+    }),
+
+    // Get messages for a conversation
+    getMessages: builder.query({
+      query: ({ conversationId, ...filters }) => {
+        const params = new URLSearchParams();
+        Object.keys(filters).forEach(key => {
+          if (filters[key] !== undefined && filters[key] !== null && filters[key] !== '') {
+            params.append(key, filters[key]);
+          }
+        });
+        return `/conversations/${conversationId}/messages?${params.toString()}`;
+      },
+      providesTags: ['Messages']
+    }),
+
+    // Create message
+    createMessage: builder.mutation({
+      query: ({ conversationId, ...data }) => ({
+        url: `/conversations/${conversationId}/messages`,
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: ['Messages', 'Conversations']
+    }),
+
+    // Get conversation stats
+    getConversationStats: builder.query({
+      query: () => '/conversations/stats',
+      providesTags: ['Conversations']
     })
   })
 });
