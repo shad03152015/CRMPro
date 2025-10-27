@@ -6,6 +6,8 @@ const Contact = require('../models/Contact');
 const Opportunity = require('../models/Opportunity');
 const Calendar = require('../models/Calendar');
 const Appointment = require('../models/Appointment');
+const Conversation = require('../models/Conversation');
+const Message = require('../models/Message');
 const connectDB = require('./database');
 
 const seedDatabase = async () => {
