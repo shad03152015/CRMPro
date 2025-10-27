@@ -18,6 +18,9 @@ function App() {
       {/* Contacts route */}
       <Route path="/contacts" element={<Contacts />} />
 
+      {/* Conversations route */}
+      <Route path="/conversations" element={<Conversations />} />
+
       {/* Calendar routes */}
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/calendar-settings" element={<CalendarSettings />} />
