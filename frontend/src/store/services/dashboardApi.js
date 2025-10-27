@@ -281,5 +281,14 @@ export const {
   useCreateAppointmentMutation,
   useUpdateAppointmentMutation,
   useDeleteAppointmentMutation,
-  useUpdateAppointmentStatusMutation
+  useUpdateAppointmentStatusMutation,
+  useGetContactsQuery,
+  useGetContactQuery,
+  useCreateContactMutation,
+  useUpdateContactMutation,
+  useDeleteContactMutation,
+  useBulkDeleteContactsMutation,
+  useBulkUpdateContactsMutation,
+  useSearchContactsQuery,
+  useGetContactStatsQuery
 } = dashboardApi;
