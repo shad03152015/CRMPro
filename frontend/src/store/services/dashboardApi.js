@@ -397,5 +397,16 @@ export const {
   useBulkDeleteContactsMutation,
   useBulkUpdateContactsMutation,
   useSearchContactsQuery,
-  useGetContactStatsQuery
+  useGetContactStatsQuery,
+  useGetConversationsQuery,
+  useGetConversationQuery,
+  useCreateConversationMutation,
+  useUpdateConversationMutation,
+  useDeleteConversationMutation,
+  useToggleConversationStarMutation,
+  useMarkConversationAsReadMutation,
+  useMarkConversationAsUnreadMutation,
+  useGetMessagesQuery,
+  useCreateMessageMutation,
+  useGetConversationStatsQuery
 } = dashboardApi;
