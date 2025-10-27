@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard';
 import Calendar from './pages/Calendar';
 import CalendarSettings from './pages/CalendarSettings';
 import Contacts from './pages/Contacts';
+import Conversations from './pages/Conversations';
 import NotFound from './pages/NotFound';
 
 function App() {
