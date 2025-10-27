@@ -712,6 +712,13 @@ const seedDatabase = async () => {
     console.log(`     • Scheduled: ${appointments.filter(a => a.status === 'scheduled').length}`);
     console.log(`     • Confirmed: ${appointments.filter(a => a.status === 'confirmed').length}`);
     console.log(`     • Completed: ${appointments.filter(a => a.status === 'completed').length}`);
+    console.log(`   - Conversations: ${conversations.length}`);
+    console.log(`     • Open: ${conversations.filter(c => c.status === 'open').length}`);
+    console.log(`     • Pending: ${conversations.filter(c => c.status === 'pending').length}`);
+    console.log(`     • Closed: ${conversations.filter(c => c.status === 'closed').length}`);
+    console.log(`     • Unread: ${conversations.filter(c => c.unreadCount > 0).length}`);
+    console.log(`     • Starred: ${conversations.filter(c => c.isStarred).length}`);
+    console.log(`   - Messages: ${totalMessages}`);
     console.log(`   - Total Pipeline Value: $${opportunities.filter(o => o.status === 'open').reduce((sum, o) => sum + o.value, 0).toLocaleString()}\n`);
 
     process.exit(0);
