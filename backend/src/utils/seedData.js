@@ -25,7 +25,9 @@ const seedDatabase = async () => {
       Contact.deleteMany({}),
       Opportunity.deleteMany({}),
       Calendar.deleteMany({}),
-      Appointment.deleteMany({})
+      Appointment.deleteMany({}),
+      Conversation.deleteMany({}),
+      Message.deleteMany({})
     ]);
 
     // Create default pipeline
