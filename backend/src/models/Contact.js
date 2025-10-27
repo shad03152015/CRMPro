@@ -31,13 +31,54 @@ const contactSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  address: {
+    street: String,
+    city: String,
+    state: String,
+    zipCode: String,
+    country: String
+  },
+  website: {
+    type: String,
+    trim: true
+  },
+  socialMedia: {
+    linkedin: String,
+    twitter: String,
+    facebook: String
+  },
+  leadSource: {
+    type: String,
+    enum: ['Website', 'Referral', 'Social Media', 'Email Campaign', 'Cold Call', 'Event', 'Other'],
+    default: 'Other'
+  },
+  status: {
+    type: String,
+    enum: ['Active', 'Inactive', 'Lead', 'Customer', 'Partner'],
+    default: 'Lead'
+  },
+  assignedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   tags: [{
     type: String,
     trim: true
   }],
+  notes: {
+    type: String,
+    trim: true
+  },
+  lastContactedDate: {
+    type: Date
+  },
   customFields: {
     type: mongoose.Schema.Types.Mixed,
     default: {}
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   }
 }, {
   timestamps: true
