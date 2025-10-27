@@ -26,11 +26,11 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'CRMPro API is running' });
 });
 
-// API Routes (will be added in Phase 3)
-// app.use('/api/dashboard', require('./routes/dashboard.routes'));
-// app.use('/api/opportunities', require('./routes/opportunities.routes'));
-// app.use('/api/pipelines', require('./routes/pipelines.routes'));
-// app.use('/api/stages', require('./routes/stages.routes'));
+// API Routes
+app.use('/api/dashboard', require('./routes/dashboard.routes'));
+app.use('/api/opportunities', require('./routes/opportunities.routes'));
+app.use('/api/pipelines', require('./routes/pipelines.routes'));
+app.use('/api/stages', require('./routes/stages.routes'));
 
 // 404 handler for undefined routes
 app.use((req, res) => {
