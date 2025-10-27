@@ -178,6 +178,88 @@ export const dashboardApi = createApi({
         body: { status }
       }),
       invalidatesTags: ['Appointments', 'Calendars']
+    }),
+
+    // Get contacts
+    getContacts: builder.query({
+      query: (filters = {}) => {
+        const params = new URLSearchParams();
+        Object.keys(filters).forEach(key => {
+          if (filters[key] !== undefined && filters[key] !== null && filters[key] !== '') {
+            params.append(key, filters[key]);
+          }
+        });
+        return `/contacts?${params.toString()}`;
+      },
+      providesTags: ['Contacts'],
+      keepUnusedDataFor: 30
+    }),
+
+    // Get single contact
+    getContact: builder.query({
+      query: (id) => `/contacts/${id}`,
+      providesTags: ['Contacts']
+    }),
+
+    // Create contact
+    createContact: builder.mutation({
+      query: (data) => ({
+        url: '/contacts',
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: ['Contacts']
+    }),
+
+    // Update contact
+    updateContact: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/contacts/${id}`,
+        method: 'PUT',
+        body: data
+      }),
+      invalidatesTags: ['Contacts']
+    }),
+
+    // Delete contact
+    deleteContact: builder.mutation({
+      query: (id) => ({
+        url: `/contacts/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Contacts']
+    }),
+
+    // Bulk delete contacts
+    bulkDeleteContacts: builder.mutation({
+      query: (contactIds) => ({
+        url: '/contacts/bulk-delete',
+        method: 'POST',
+        body: { contactIds }
+      }),
+      invalidatesTags: ['Contacts']
+    }),
+
+    // Bulk update contacts
+    bulkUpdateContacts: builder.mutation({
+      query: ({ contactIds, updateData }) => ({
+        url: '/contacts/bulk-update',
+        method: 'POST',
+        body: { contactIds, updateData }
+      }),
+      invalidatesTags: ['Contacts']
+    }),
+
+    // Search contacts
+    searchContacts: builder.query({
+      query: (searchTerm) => `/contacts/search?q=${encodeURIComponent(searchTerm)}`,
+      providesTags: ['Contacts']
+    }),
+
+    // Get contact stats
+    getContactStats: builder.query({
+      query: () => '/contacts/stats',
+      providesTags: ['Contacts']
     })
   })
 });
