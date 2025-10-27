@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 export const dashboardApi = createApi({
   reducerPath: 'dashboardApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ['DashboardMetrics', 'Opportunities', 'Pipelines', 'Stages'],
+  tagTypes: ['DashboardMetrics', 'Opportunities', 'Pipelines', 'Stages', 'Calendars', 'Appointments'],
   endpoints: (builder) => ({
     // Get dashboard metrics
     getDashboardMetrics: builder.query({
@@ -81,6 +81,103 @@ export const dashboardApi = createApi({
         method: 'DELETE'
       }),
       invalidatesTags: ['Opportunities', 'DashboardMetrics']
+    }),
+
+    // Get calendars
+    getCalendars: builder.query({
+      query: () => '/calendars',
+      providesTags: ['Calendars'],
+      keepUnusedDataFor: 300
+    }),
+
+    // Get single calendar
+    getCalendar: builder.query({
+      query: (id) => `/calendars/${id}`,
+      providesTags: ['Calendars']
+    }),
+
+    // Create calendar
+    createCalendar: builder.mutation({
+      query: (data) => ({
+        url: '/calendars',
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: ['Calendars']
+    }),
+
+    // Update calendar
+    updateCalendar: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/calendars/${id}`,
+        method: 'PUT',
+        body: data
+      }),
+      invalidatesTags: ['Calendars']
+    }),
+
+    // Delete calendar
+    deleteCalendar: builder.mutation({
+      query: (id) => ({
+        url: `/calendars/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Calendars']
+    }),
+
+    // Get appointments
+    getAppointments: builder.query({
+      query: ({ calendarId, startDate, endDate, status, limit = 100, skip = 0 } = {}) => {
+        const params = new URLSearchParams();
+        if (calendarId) params.append('calendarId', calendarId);
+        if (startDate) params.append('startDate', startDate);
+        if (endDate) params.append('endDate', endDate);
+        if (status) params.append('status', status);
+        params.append('limit', limit);
+        params.append('skip', skip);
+        return `/appointments?${params.toString()}`;
+      },
+      providesTags: ['Appointments'],
+      keepUnusedDataFor: 30
+    }),
+
+    // Create appointment
+    createAppointment: builder.mutation({
+      query: (data) => ({
+        url: '/appointments',
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: ['Appointments', 'Calendars']
+    }),
+
+    // Update appointment
+    updateAppointment: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/appointments/${id}`,
+        method: 'PUT',
+        body: data
+      }),
+      invalidatesTags: ['Appointments', 'Calendars']
+    }),
+
+    // Delete appointment
+    deleteAppointment: builder.mutation({
+      query: (id) => ({
+        url: `/appointments/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Appointments', 'Calendars']
+    }),
+
+    // Update appointment status
+    updateAppointmentStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/appointments/${id}/status`,
+        method: 'PATCH',
+        body: { status }
+      }),
+      invalidatesTags: ['Appointments', 'Calendars']
     })
   })
 });
