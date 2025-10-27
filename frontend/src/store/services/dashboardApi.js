@@ -189,5 +189,15 @@ export const {
   useGetStagesQuery,
   useCreateOpportunityMutation,
   useUpdateOpportunityMutation,
-  useDeleteOpportunityMutation
+  useDeleteOpportunityMutation,
+  useGetCalendarsQuery,
+  useGetCalendarQuery,
+  useCreateCalendarMutation,
+  useUpdateCalendarMutation,
+  useDeleteCalendarMutation,
+  useGetAppointmentsQuery,
+  useCreateAppointmentMutation,
+  useUpdateAppointmentMutation,
+  useDeleteAppointmentMutation,
+  useUpdateAppointmentStatusMutation
 } = dashboardApi;
