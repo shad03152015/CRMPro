@@ -27,7 +27,7 @@ const mainMenuItems = [
   { label: 'Launchpad', icon: <RocketLaunch />, path: '/launchpad' },
   { label: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
   { label: 'Conversations', icon: <Chat />, path: '/conversations' },
-  { label: 'Calendars', icon: <CalendarToday />, path: '/calendars' },
+  { label: 'Calendar', icon: <CalendarToday />, path: '/calendar' },
   { label: 'Contacts', icon: <Contacts />, path: '/contacts' },
   { label: 'Opportunities', icon: <TrendingUp />, path: '/opportunities' },
   { label: 'Payments', icon: <Payment />, path: '/payments' },
